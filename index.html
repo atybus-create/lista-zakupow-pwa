@@ -2,245 +2,1621 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#090d10">
-  <meta name="color-scheme" content="dark">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Lista zakupów">
-  <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>Lista zakupów</title>
-  <link rel="manifest" href="./manifest.webmanifest?v=20260814-2">
-  <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="./icon.svg">
-  <link rel="stylesheet" href="./styles.css?v=20260814-2">
-  <style>
-    .tabs{grid-template-columns:repeat(5,1fr)!important}
-    .favorite-entry{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;width:100%;border:1px solid var(--line);border-radius:17px;padding:14px;background:linear-gradient(145deg,#151e23,#10171b);color:var(--text);text-align:left;cursor:pointer}
-    .favorite-entry-icon{width:47px;height:47px;border-radius:14px;display:grid;place-items:center;background:rgba(46,230,195,.12);color:var(--accent);font-size:24px}
-    .favorite-entry strong{display:block}.favorite-entry small{display:block;color:var(--muted);margin-top:3px}.favorite-entry .chevron{justify-self:end}
-    .favorites-add-card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-bottom:16px}
-    .favorites-add-card label{grid-column:1/-1;margin-bottom:0}.favorites-add-card input{width:100%;height:50px;border:1px solid var(--line2);border-radius:15px;background:linear-gradient(180deg,#12191e,#0e1418);color:var(--text);padding:0 14px;outline:none}.favorites-add-card input:focus{border-color:rgba(46,230,195,.58);box-shadow:0 0 0 3px rgba(46,230,195,.08)}
-    .favorites-add-card .primary{width:auto;min-width:110px;height:50px;padding:0 16px}
-    .favorites-list{padding:6px 14px;background:linear-gradient(180deg,rgba(22,30,35,.92),rgba(13,19,23,.96));border:1px solid var(--line);border-radius:23px;box-shadow:var(--shadow)}
-    .favorite-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid rgba(51,65,73,.56)}.favorite-row:last-child{border-bottom:0}
-    .favorite-row .item-main strong{font-size:16px}.favorite-row .item-main small{font-size:12px;color:var(--muted)}
-    .favorite-add-list{height:40px;border:0;border-radius:12px;padding:0 12px;background:rgba(46,230,195,.12);color:var(--accent);font-weight:850;cursor:pointer}
-    .favorite-star{width:32px;height:32px;border:1px solid rgba(46,230,195,.22);border-radius:10px;background:rgba(46,230,195,.08);color:var(--accent);font-size:18px;cursor:pointer}.favorite-star.saved{background:var(--accent);color:#06251f}
-    @media(max-width:560px){.tabs{overflow-x:auto;grid-template-columns:repeat(5,minmax(64px,1fr))!important}.tab{font-size:11px!important}.favorites-add-card{grid-template-columns:1fr}.favorites-add-card .primary{width:100%}.favorite-row{grid-template-columns:auto minmax(0,1fr) auto}.favorite-row .favorite-add-list{grid-column:2/3}.favorite-row .delete-btn{grid-column:3/4;grid-row:1/3}}
-  </style>
-</head>
-<body>
-  <div id="offline" class="offline">Brak połączenia z siecią.</div>
 
-  <div id="processing" class="processing hidden" role="status" aria-live="polite">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#100c12"
+  >
+
+  <meta
+    name="color-scheme"
+    content="dark"
+  >
+
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="Lista zakupów"
+  >
+
+  <meta
+    name="robots"
+    content="noindex,nofollow,noarchive"
+  >
+
+  <title>Lista zakupów</title>
+
+  <link
+    rel="manifest"
+    href="./manifest.webmanifest?v=20260814-3"
+  >
+
+  <link
+    rel="icon"
+    href="./icon.svg"
+    type="image/svg+xml"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="./icon.svg"
+  >
+
+  <link
+    rel="stylesheet"
+    href="./styles.css?v=20260814-3"
+  >
+</head>
+
+<body>
+
+  <!-- OFFLINE -->
+  <div
+    id="offline"
+    class="offline"
+  >
+    Brak połączenia z siecią
+  </div>
+
+
+  <!-- PROCESSING -->
+  <div
+    id="processing"
+    class="processing hidden"
+    role="status"
+    aria-live="polite"
+  >
     <div class="processing-box">
-      <div class="spinner"></div>
-      <h2 id="processingTitle">Przetwarzam</h2>
-      <p id="processingMsg">Proszę czekać…</p>
-      <p id="processingTime" class="muted">0 s</p>
+
+      <div class="processing-icon">
+        <div class="spinner"></div>
+      </div>
+
+      <div class="processing-kicker">
+        Lista zakupów
+      </div>
+
+      <h2 id="processingTitle">
+        Przetwarzam
+      </h2>
+
+      <p id="processingMsg">
+        Proszę czekać…
+      </p>
+
+      <div
+        id="processingTime"
+        class="processing-time"
+      >
+        0 s
+      </div>
+
     </div>
   </div>
 
-  <main id="appShell" class="app-shell" data-active-view="list">
+
+  <!-- APP -->
+  <main
+    id="appShell"
+    class="app-shell"
+    data-active-view="list"
+  >
+
+    <!-- HEADER -->
     <header class="app-header">
-      <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7.5 8V6.5a4.5 4.5 0 0 1 9 0V8M5.5 8h13l1 12h-15l1-12Z"/></svg>
-      </div>
+
       <div class="brand-copy">
-        <h1>Lista zakupów</h1>
-        <p class="muted">Wersja 2</p>
+
+        <div class="brand-kicker">
+          LISTA / V2
+        </div>
+
+        <h1>
+          Lista zakupów
+        </h1>
+
+        <p>
+          Twoja wspólna lista
+        </p>
+
       </div>
-      <button id="installBtn" class="icon-button install-btn hidden" type="button" title="Zainstaluj aplikację" aria-label="Zainstaluj aplikację">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg>
-      </button>
+
+
+      <div class="header-actions">
+
+        <div class="connection-pill">
+
+          <span class="connection-dot"></span>
+
+          <span id="dockStatus">
+            Online
+          </span>
+
+        </div>
+
+
+        <button
+          id="installBtn"
+          class="icon-button install-btn hidden"
+          type="button"
+          title="Zainstaluj aplikację"
+          aria-label="Zainstaluj aplikację"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M12 3v11
+                 m0 0 4-4
+                 m-4 4-4-4
+                 M5 17v3
+                 h14
+                 v-3"
+            />
+          </svg>
+        </button>
+
+      </div>
+
     </header>
 
-    <nav class="tabs" aria-label="Nawigacja">
-      <button class="tab active" data-view="list">Lista</button>
-      <button class="tab" data-view="add">Dodaj</button>
-      <button class="tab" data-view="favorites">Ulubione</button>
-      <button class="tab" data-view="shop">Zakupy</button>
-      <button class="tab" data-view="archive">Archiwum</button>
+
+    <!-- LISTA -->
+    <section
+      id="view-list"
+      class="view active"
+    >
+
+      <div class="screen-intro">
+
+        <div class="step-label">
+          TWOJA LISTA
+        </div>
+
+        <div class="accent-line">
+          <span></span>
+        </div>
+
+        <h2>
+          Lista zakupów
+        </h2>
+
+        <p>
+          Dodawaj produkty, kontroluj zakupy
+          i miej wszystko w jednym miejscu.
+        </p>
+
+      </div>
+
+
+      <div class="hero-card compact">
+
+        <div class="summary-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M7 7h13
+                 M7 12h13
+                 M7 17h13
+                 M3.5 7h.01
+                 M3.5 12h.01
+                 M3.5 17h.01"
+            />
+          </svg>
+        </div>
+
+
+        <div class="summary-copy">
+
+          <span class="card-kicker">
+            AKTUALNA LISTA
+          </span>
+
+          <strong id="listSummaryTitle">
+            Do kupienia
+          </strong>
+
+          <span
+            id="listCount"
+            class="muted"
+          ></span>
+
+        </div>
+
+
+        <div class="summary-meta">
+          <span id="dockCount">
+            0 produktów
+          </span>
+        </div>
+
+      </div>
+
+
+      <div
+        id="listItems"
+        class="list-panel"
+      ></div>
+
+
+      <button
+        class="large-add-card"
+        data-go="add"
+        type="button"
+      >
+
+        <span class="large-add-icon">
+          +
+        </span>
+
+        <span class="large-add-copy">
+          <strong>
+            Dodaj produkty
+          </strong>
+
+          <small>
+            Tekstem, zdjęciem lub z ulubionych
+          </small>
+        </span>
+
+        <span class="large-add-arrow">
+          →
+        </span>
+
+      </button>
+
+    </section>
+
+
+    <!-- DODAJ -->
+    <section
+      id="view-add"
+      class="view"
+    >
+
+      <div class="screen-intro">
+
+        <div class="step-label">
+          DODAWANIE PRODUKTÓW
+        </div>
+
+        <div class="accent-line">
+          <span class="medium"></span>
+        </div>
+
+        <h2>
+          Dodaj produkty
+        </h2>
+
+        <p>
+          Wybierz najwygodniejszy sposób
+          dodania produktów do listy.
+        </p>
+
+      </div>
+
+
+      <!-- PHOTO -->
+      <label
+        class="choice-card camera-button"
+        for="photoInput"
+      >
+
+        <span class="choice-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M4 8h3
+                 l1.5-2h7
+                 L17 8h3
+                 v11H4V8Z"
+            />
+
+            <circle
+              cx="12"
+              cy="13"
+              r="4"
+            />
+          </svg>
+
+        </span>
+
+
+        <span class="choice-copy">
+
+          <strong>
+            Zrób zdjęcie
+          </strong>
+
+          <small>
+            AI rozpozna produkty widoczne na zdjęciu
+          </small>
+
+        </span>
+
+
+        <span class="choice-arrow">
+          →
+        </span>
+
+      </label>
+
+
+      <input
+        id="photoInput"
+        type="file"
+        accept="image/*"
+        capture="environment"
+        hidden
+      >
+
+
+      <!-- TEXT -->
+      <div class="card manual-card">
+
+        <div class="manual-heading">
+
+          <span class="choice-icon small">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="m5 19 3.5-.8
+                   L18 8.7
+                   a2 2 0 0 0-2.8-2.8
+                   L5.8 15.4
+                   5 19Z"
+              />
+
+              <path
+                d="m14 7 3 3"
+              />
+            </svg>
+
+          </span>
+
+
+          <div>
+            <strong>
+              Wpisz produkty ręcznie
+            </strong>
+
+            <small>
+              Możesz wpisać kilka pozycji naraz
+            </small>
+          </div>
+
+        </div>
+
+
+        <label
+          class="input-label"
+          for="textInput"
+        >
+          Produkty
+        </label>
+
+
+        <div class="textarea-wrap">
+
+          <textarea
+            id="textInput"
+            rows="4"
+            maxlength="500"
+            placeholder="np. mleko, chleb, 2 banany"
+          ></textarea>
+
+          <span
+            id="charCount"
+            class="char-count"
+          >
+            0/500
+          </span>
+
+        </div>
+
+
+        <button
+          id="recognizeTextBtn"
+          class="primary"
+          type="button"
+        >
+          <span class="button-spark">
+            ✦
+          </span>
+
+          Rozpoznaj produkty
+        </button>
+
+      </div>
+
+
+      <!-- FAVORITES -->
+      <button
+        class="choice-card favorite-entry"
+        data-go="favorites"
+        type="button"
+      >
+
+        <span class="choice-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="m12 3
+                 2.7 5.5
+                 6.1.9
+                 -4.4 4.3
+                 1 6.1
+                 -5.4-2.9
+                 -5.4 2.9
+                 1-6.1
+                 L3.2 9.4
+                 l6.1-.9
+                 L12 3Z"
+            />
+          </svg>
+
+        </span>
+
+
+        <span class="choice-copy">
+
+          <strong>
+            Dodaj z ulubionych
+          </strong>
+
+          <small>
+            Wybierz produkty kupowane najczęściej
+          </small>
+
+        </span>
+
+
+        <span class="choice-arrow">
+          →
+        </span>
+
+      </button>
+
+
+      <!-- RECOGNITION -->
+      <div
+        id="recognitionPanel"
+        class="card recognition-card hidden"
+      >
+
+        <div class="section-head">
+
+          <div>
+
+            <span class="card-kicker">
+              WYNIK
+            </span>
+
+            <h3>
+              Rozpoznane produkty
+            </h3>
+
+            <p class="muted">
+              Usuń błędne pozycje lub dodaj produkt do ulubionych.
+            </p>
+
+          </div>
+
+
+          <span
+            id="recognizedCount"
+            class="count-badge"
+          >
+            0
+          </span>
+
+        </div>
+
+
+        <div
+          id="recognizedItems"
+          class="recognized-grid"
+        ></div>
+
+
+        <div class="button-row sticky-actions">
+
+          <button
+            id="cancelRecognitionBtn"
+            class="secondary"
+            type="button"
+          >
+            Anuluj
+          </button>
+
+
+          <button
+            id="saveRecognitionBtn"
+            class="primary"
+            type="button"
+          >
+            Dodaj do listy
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FAVORITES -->
+    <section
+      id="view-favorites"
+      class="view"
+    >
+
+      <div class="screen-intro">
+
+        <div class="step-label">
+          SZYBKI DOSTĘP
+        </div>
+
+        <div class="accent-line">
+          <span class="short"></span>
+        </div>
+
+        <h2>
+          Ulubione
+        </h2>
+
+        <p>
+          Zapisz najczęściej kupowane produkty
+          i dodawaj je do listy jednym dotknięciem.
+        </p>
+
+      </div>
+
+
+      <div class="card favorites-add-card">
+
+        <label
+          for="favoriteManualInput"
+          class="input-label"
+        >
+          Nowy ulubiony produkt
+        </label>
+
+
+        <input
+          id="favoriteManualInput"
+          maxlength="160"
+          placeholder="np. Jogurt naturalny Bieluch"
+        >
+
+
+        <button
+          id="favoriteManualAdd"
+          class="primary"
+          type="button"
+        >
+          + Dodaj
+        </button>
+
+      </div>
+
+
+      <div
+        id="favoritesList"
+        class="favorites-list"
+      >
+        <div class="empty">
+          Wczytuję ulubione…
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- SHOP -->
+    <section
+      id="view-shop"
+      class="view"
+    >
+
+      <div class="screen-intro">
+
+        <div class="step-label">
+          TRYB ZAKUPÓW
+        </div>
+
+        <div class="accent-line">
+          <span class="medium"></span>
+        </div>
+
+        <h2>
+          Zakupy
+        </h2>
+
+        <p>
+          Zaznaczaj produkty podczas zakupów.
+          Gotowe pozycje trafiają do koszyka.
+        </p>
+
+      </div>
+
+
+      <div
+        id="shopSummary"
+        class="hero-card shop-progress-card"
+      ></div>
+
+
+      <div
+        id="shopItems"
+        class="shop-list"
+      ></div>
+
+
+      <button
+        id="finishBtn"
+        class="primary finish-button"
+        type="button"
+        disabled
+      >
+        Zakupy zrobione
+      </button>
+
+    </section>
+
+
+    <!-- ARCHIVE -->
+    <section
+      id="view-archive"
+      class="view"
+    >
+
+      <div class="screen-intro">
+
+        <div class="step-label">
+          HISTORIA
+        </div>
+
+        <div class="accent-line">
+          <span class="short"></span>
+        </div>
+
+        <h2>
+          Archiwum zakupów
+        </h2>
+
+        <p>
+          Poprzednie listy i zakończone zakupy
+          znajdziesz w jednym miejscu.
+        </p>
+
+      </div>
+
+
+      <div
+        id="archiveItems"
+        class="archive-list"
+      ></div>
+
+
+      <div
+        id="archiveDetail"
+        class="card archive-detail hidden"
+      ></div>
+
+    </section>
+
+
+    <!-- TOAST -->
+    <div
+      id="toast"
+      class="toast hidden"
+      role="status"
+    ></div>
+
+
+    <!-- BOTTOM NAV -->
+    <nav
+      class="tabs"
+      aria-label="Nawigacja"
+    >
+
+      <button
+        class="tab active"
+        data-view="list"
+        type="button"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M7 6h13
+               M7 12h13
+               M7 18h13
+               M3.5 6h.01
+               M3.5 12h.01
+               M3.5 18h.01"
+          />
+        </svg>
+
+        <span>
+          Lista
+        </span>
+
+      </button>
+
+
+      <button
+        class="tab"
+        data-view="add"
+        type="button"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+          />
+
+          <path
+            d="M12 8v8M8 12h8"
+          />
+        </svg>
+
+        <span>
+          Dodaj
+        </span>
+
+      </button>
+
+
+      <button
+        class="tab"
+        data-view="favorites"
+        type="button"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="m12 3
+               2.7 5.5
+               6.1.9
+               -4.4 4.3
+               1 6.1
+               -5.4-2.9
+               -5.4 2.9
+               1-6.1
+               L3.2 9.4
+               l6.1-.9
+               L12 3Z"
+          />
+        </svg>
+
+        <span>
+          Ulubione
+        </span>
+
+      </button>
+
+
+      <button
+        class="tab"
+        data-view="shop"
+        type="button"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M4 5h2
+               l2 10
+               h9
+               l2-7
+               H7"
+          />
+
+          <circle
+            cx="10"
+            cy="19"
+            r="1"
+          />
+
+          <circle
+            cx="17"
+            cy="19"
+            r="1"
+          />
+        </svg>
+
+        <span>
+          Zakupy
+        </span>
+
+      </button>
+
+
+      <button
+        class="tab"
+        data-view="archive"
+        type="button"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M4 7h16v13H4V7Z
+               M6 4h12l2 3H4l2-3Z
+               M9 11h6"
+          />
+        </svg>
+
+        <span>
+          Archiwum
+        </span>
+
+      </button>
+
     </nav>
 
-    <section id="view-list" class="view active">
-      <div class="hero-card compact">
-        <div class="summary-icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
-        </div>
-        <div class="summary-copy">
-          <strong id="listSummaryTitle">Aktualna lista</strong>
-          <span id="listCount" class="muted"></span>
-        </div>
-        <button class="soft-action" data-go="add" type="button">+ Dodaj</button>
-      </div>
-      <div id="listItems" class="list-panel"></div>
-    </section>
-
-    <section id="view-add" class="view">
-      <div class="section-title">
-        <div class="section-title-icon">✦</div>
-        <div><h2>Dodaj produkty</h2><p class="muted">Wpisz produkty, zrób zdjęcie albo wybierz ulubione.</p></div>
-      </div>
-
-      <div class="card add-card">
-        <label for="textInput">Wpisz produkty</label>
-        <div class="textarea-wrap">
-          <textarea id="textInput" rows="4" maxlength="500" placeholder="np. mleko, chleb, 2 banany"></textarea>
-          <span id="charCount" class="char-count">0/500</span>
-        </div>
-        <button id="recognizeTextBtn" class="primary glow" type="button">
-          <span>✦</span> Rozpoznaj z tekstu
-        </button>
-
-        <div class="divider"><span>lub</span></div>
-
-        <label class="camera-button" for="photoInput">
-          <span class="camera-icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h3l1.5-2h7L17 7h3v12H4V7Z"/><circle cx="12" cy="13" r="4"/></svg>
-          </span>
-          <div><strong>Zrób zdjęcie</strong><small>Rozpoznaj produkty widoczne na zdjęciu</small></div>
-          <span class="chevron">›</span>
-        </label>
-        <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
-
-        <div class="divider"><span>lub</span></div>
-
-        <button class="favorite-entry" data-go="favorites" type="button">
-          <span class="favorite-entry-icon">★</span>
-          <span><strong>Dodaj ulubione</strong><small>Wybierz produkty, które kupujesz najczęściej</small></span>
-          <span class="chevron">›</span>
-        </button>
-      </div>
-
-      <div id="recognitionPanel" class="card recognition-card hidden">
-        <div class="section-head">
-          <div>
-            <h3>Rozpoznane produkty</h3>
-            <p class="muted">Usuń błędne pozycje lub oznacz produkt jako ulubiony.</p>
-          </div>
-          <span id="recognizedCount" class="count-badge">0</span>
-        </div>
-        <div id="recognizedItems" class="recognized-grid"></div>
-        <div class="button-row sticky-actions">
-          <button id="cancelRecognitionBtn" class="secondary" type="button">Anuluj</button>
-          <button id="saveRecognitionBtn" class="primary glow" type="button">✓ Dodaj do listy</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="view-favorites" class="view">
-      <div class="section-title">
-        <div class="section-title-icon">★</div>
-        <div><h2>Ulubione</h2><p class="muted">Szybko dodawaj najczęściej kupowane produkty.</p></div>
-      </div>
-      <div class="card favorites-add-card">
-        <label for="favoriteManualInput">Dodaj produkt do ulubionych</label>
-        <input id="favoriteManualInput" maxlength="160" placeholder="np. Jogurt naturalny Bieluch">
-        <button id="favoriteManualAdd" class="primary glow" type="button">+ Dodaj</button>
-      </div>
-      <div id="favoritesList" class="favorites-list"><div class="empty">Wczytuję ulubione…</div></div>
-    </section>
-
-    <section id="view-shop" class="view">
-      <div id="shopSummary" class="hero-card shop-progress-card"></div>
-      <div id="shopItems" class="shop-list"></div>
-      <button id="finishBtn" class="primary glow danger-space" type="button" disabled>✓ Zakupy zrobione</button>
-    </section>
-
-    <section id="view-archive" class="view">
-      <div class="section-title archive-title">
-        <div class="section-title-icon archive-icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v13H4V7Zm2-3h12l2 3H4l2-3Zm3 7h6"/></svg>
-        </div>
-        <div><h2>Archiwum zakupów</h2><p class="muted">Twoje wcześniejsze listy i zakupy.</p></div>
-      </div>
-      <div id="archiveItems" class="archive-list"></div>
-      <div id="archiveDetail" class="card archive-detail hidden"></div>
-    </section>
-
-    <div id="toast" class="toast hidden" role="status"></div>
-
-    <div class="bottom-dock" aria-hidden="false">
-      <div class="dock-side">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
-        <span id="dockCount">0 produktów</span>
-      </div>
-      <button class="fab" data-go="add" type="button" aria-label="Dodaj produkty">+</button>
-      <div class="dock-side dock-right">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        <span id="dockStatus">Online</span>
-      </div>
-    </div>
   </main>
 
+
+  <!-- CACHE REFRESH -->
   <script>
-    if('caches' in window){
-      caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('lista-zakupow-v2-')).map(k=>caches.delete(k)))).catch(()=>{});
+    if ('caches' in window) {
+      caches
+        .keys()
+        .then(
+          keys =>
+            Promise.all(
+              keys
+                .filter(
+                  key =>
+                    key.startsWith(
+                      'lista-zakupow-v2-'
+                    )
+                )
+                .map(
+                  key =>
+                    caches.delete(key)
+                )
+            )
+        )
+        .catch(() => {});
     }
-    if('serviceWorker' in navigator){
-      navigator.serviceWorker.getRegistrations().then(regs=>regs.forEach(reg=>reg.update())).catch(()=>{});
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then(
+          regs =>
+            regs.forEach(
+              reg =>
+                reg.update()
+            )
+        )
+        .catch(() => {});
     }
   </script>
-  <script src="./app.js?v=20260814-2" defer></script>
+
+
+  <!-- GŁÓWNA LOGIKA - BEZ ZMIAN -->
+  <script
+    src="./app.js?v=20260814-3"
+    defer
+  ></script>
+
+
+  <!-- ULUBIONE - ISTNIEJĄCA LOGIKA -->
   <script>
-  (()=>{
-    const FAVORITES_API='https://n8n-pi.taild8d05f.ts.net/webhook/lista-zakupow-v2';
-    const escFav=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    let favorites=[];
+  (() => {
 
-    async function favApi(action,fields={}){
-      const fd=new FormData();fd.append('action',action);Object.entries(fields).forEach(([k,v])=>fd.append(k,String(v??'')));
-      const r=await fetch(FAVORITES_API,{method:'POST',body:fd,cache:'no-store'});const d=await r.json();
-      if(!r.ok||!d.success)throw new Error(d.message||d.error||'Błąd ulubionych.');return d;
-    }
-    function notify(msg){
-      const el=document.getElementById('toast');if(!el)return;el.textContent=msg;el.classList.remove('hidden');clearTimeout(window.__favToastTimer);window.__favToastTimer=setTimeout(()=>el.classList.add('hidden'),2400);
-    }
-    function genericIcon(){return '<svg viewBox="0 0 24 24" fill="none"><path d="M6 8h12l1 12H5L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>'}
-    function trashIcon(){return '<svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M9 7V4h6v3m-8 0 1 13h8l1-13M10 11v5m4-5v5"/></svg>'}
-    function renderFavorites(){
-      const box=document.getElementById('favoritesList');if(!box)return;
-      box.innerHTML=favorites.length?favorites.map(f=>`<div class="favorite-row"><div class="item-icon">${genericIcon()}</div><div class="item-main"><strong>${escFav(f.product)}</strong><small>ulubiony produkt</small></div><button class="favorite-add-list" type="button" data-fav-add-list="${escFav(f.favoriteId)}">Dodaj</button><button class="delete-btn" type="button" data-fav-delete="${escFav(f.favoriteId)}" aria-label="Usuń z ulubionych">${trashIcon()}</button></div>`).join(''):'<div class="empty"><span class="empty-icon">★</span>Nie masz jeszcze ulubionych produktów.</div>';
-    }
-    async function loadFavorites(){
-      const box=document.getElementById('favoritesList');if(box)box.innerHTML='<div class="empty">Wczytuję ulubione…</div>';
-      try{const d=await favApi('favorites_list');favorites=Array.isArray(d.favorites)?d.favorites:[];renderFavorites();syncRecognizedStars()}catch(e){if(box)box.innerHTML='<div class="empty">Nie udało się pobrać ulubionych.</div>';notify(e.message)}
-    }
-    async function addFavorite(product){
-      product=String(product||'').trim();if(!product)return;
-      try{await favApi('favorite_add',{product});await loadFavorites();notify('Dodano do ulubionych.')}catch(e){notify(e.message)}
-    }
-    async function deleteFavorite(id){
-      try{await favApi('favorite_delete',{favoriteId:id});await loadFavorites();notify('Usunięto z ulubionych.')}catch(e){notify(e.message)}
-    }
-    async function addFavoriteToList(id){
-      const f=favorites.find(x=>String(x.favoriteId)===String(id));if(!f)return;
-      try{await favApi('add_products',{productsJson:JSON.stringify([f.product])});notify('Dodano produkt do listy.');document.querySelector('.tab[data-view="list"]')?.click()}catch(e){notify(e.message)}
-    }
-    function syncRecognizedStars(){
-      const container=document.getElementById('recognizedItems');if(!container)return;
-      [...container.querySelectorAll('.recognized-row')].forEach(row=>{
-        if(row.querySelector('.favorite-star'))return;
-        const name=row.querySelector('.product-name')?.textContent?.trim();if(!name)return;
-        const btn=document.createElement('button');btn.type='button';btn.className='favorite-star';btn.title='Dodaj do ulubionych';btn.textContent='★';btn.dataset.favoriteProduct=name;
-        const del=row.querySelector('.delete-btn');row.insertBefore(btn,del||null);
-      });
+    const FAVORITES_API =
+      'https://n8n-pi.taild8d05f.ts.net/webhook/lista-zakupow-v2';
+
+    const escFav = s =>
+      String(s ?? '')
+        .replace(
+          /[&<>"']/g,
+          c => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+          }[c])
+        );
+
+    let favorites = [];
+
+
+    async function favApi(
+      action,
+      fields = {}
+    ) {
+
+      const fd =
+        new FormData();
+
+      fd.append(
+        'action',
+        action
+      );
+
+      Object
+        .entries(fields)
+        .forEach(
+          ([k, v]) =>
+            fd.append(
+              k,
+              String(v ?? '')
+            )
+        );
+
+
+      const r =
+        await fetch(
+          FAVORITES_API,
+          {
+            method: 'POST',
+            body: fd,
+            cache: 'no-store'
+          }
+        );
+
+
+      const d =
+        await r.json();
+
+
+      if (
+        !r.ok ||
+        !d.success
+      ) {
+        throw new Error(
+          d.message ||
+          d.error ||
+          'Błąd ulubionych.'
+        );
+      }
+
+
+      return d;
     }
 
-    window.addEventListener('load',()=>{
-      const favTab=document.querySelector('.tab[data-view="favorites"]');favTab?.addEventListener('click',loadFavorites);
-      document.querySelectorAll('[data-go="favorites"]').forEach(b=>b.addEventListener('click',()=>setTimeout(loadFavorites,0)));
-      document.getElementById('favoriteManualAdd')?.addEventListener('click',async()=>{const i=document.getElementById('favoriteManualInput');const v=i?.value.trim();if(!v){notify('Wpisz nazwę produktu.');return}await addFavorite(v);if(i)i.value=''});
-      document.getElementById('favoriteManualInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('favoriteManualAdd')?.click()}});
-      document.getElementById('favoritesList')?.addEventListener('click',e=>{const add=e.target.closest('[data-fav-add-list]');if(add){addFavoriteToList(add.dataset.favAddList);return}const del=e.target.closest('[data-fav-delete]');if(del)deleteFavorite(del.dataset.favDelete)});
-      document.getElementById('recognizedItems')?.addEventListener('click',e=>{const b=e.target.closest('[data-favorite-product]');if(b){e.stopPropagation();addFavorite(b.dataset.favoriteProduct)}});
-      const recognized=document.getElementById('recognizedItems');if(recognized)new MutationObserver(syncRecognizedStars).observe(recognized,{childList:true,subtree:true});
-      syncRecognizedStars();
-    });
+
+    function notify(msg) {
+
+      const el =
+        document.getElementById(
+          'toast'
+        );
+
+      if (!el) return;
+
+
+      el.textContent =
+        msg;
+
+      el.classList.remove(
+        'hidden'
+      );
+
+
+      clearTimeout(
+        window.__favToastTimer
+      );
+
+
+      window.__favToastTimer =
+        setTimeout(
+          () =>
+            el.classList.add(
+              'hidden'
+            ),
+          2400
+        );
+    }
+
+
+    function genericIcon() {
+
+      return `
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M6 8h12
+               l1 12H5L6 8Z"
+          />
+          <path
+            d="M9 8V6
+               a3 3 0 0 1 6 0
+               v2"
+          />
+        </svg>
+      `;
+    }
+
+
+    function trashIcon() {
+
+      return `
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M5 7h14
+               M9 7V4h6v3
+               m-8 0 1 13h8l1-13
+               M10 11v5
+               m4-5v5"
+          />
+        </svg>
+      `;
+    }
+
+
+    function renderFavorites() {
+
+      const box =
+        document.getElementById(
+          'favoritesList'
+        );
+
+      if (!box) return;
+
+
+      box.innerHTML =
+        favorites.length
+          ? favorites
+              .map(
+                f => `
+                  <div class="favorite-row">
+
+                    <div class="item-icon">
+                      ${genericIcon()}
+                    </div>
+
+                    <div class="item-main">
+
+                      <strong>
+                        ${escFav(f.product)}
+                      </strong>
+
+                      <small>
+                        ulubiony produkt
+                      </small>
+
+                    </div>
+
+                    <button
+                      class="favorite-add-list"
+                      type="button"
+                      data-fav-add-list="${escFav(f.favoriteId)}"
+                    >
+                      Dodaj
+                    </button>
+
+                    <button
+                      class="delete-btn"
+                      type="button"
+                      data-fav-delete="${escFav(f.favoriteId)}"
+                      aria-label="Usuń z ulubionych"
+                    >
+                      ${trashIcon()}
+                    </button>
+
+                  </div>
+                `
+              )
+              .join('')
+          : `
+            <div class="empty">
+
+              <span class="empty-icon">
+                ☆
+              </span>
+
+              Nie masz jeszcze ulubionych produktów.
+
+            </div>
+          `;
+    }
+
+
+    async function loadFavorites() {
+
+      const box =
+        document.getElementById(
+          'favoritesList'
+        );
+
+
+      if (box) {
+        box.innerHTML =
+          `
+            <div class="empty">
+              Wczytuję ulubione…
+            </div>
+          `;
+      }
+
+
+      try {
+
+        const d =
+          await favApi(
+            'favorites_list'
+          );
+
+
+        favorites =
+          Array.isArray(d.favorites)
+            ? d.favorites
+            : [];
+
+
+        renderFavorites();
+
+        syncRecognizedStars();
+
+      } catch (e) {
+
+        if (box) {
+          box.innerHTML =
+            `
+              <div class="empty">
+                Nie udało się pobrać ulubionych.
+              </div>
+            `;
+        }
+
+
+        notify(
+          e.message
+        );
+      }
+    }
+
+
+    async function addFavorite(
+      product
+    ) {
+
+      product =
+        String(product || '')
+          .trim();
+
+
+      if (!product) {
+        return;
+      }
+
+
+      try {
+
+        await favApi(
+          'favorite_add',
+          {
+            product
+          }
+        );
+
+
+        await loadFavorites();
+
+
+        notify(
+          'Dodano do ulubionych.'
+        );
+
+      } catch (e) {
+
+        notify(
+          e.message
+        );
+      }
+    }
+
+
+    async function deleteFavorite(
+      id
+    ) {
+
+      try {
+
+        await favApi(
+          'favorite_delete',
+          {
+            favoriteId: id
+          }
+        );
+
+
+        await loadFavorites();
+
+
+        notify(
+          'Usunięto z ulubionych.'
+        );
+
+      } catch (e) {
+
+        notify(
+          e.message
+        );
+      }
+    }
+
+
+    async function addFavoriteToList(
+      id
+    ) {
+
+      const f =
+        favorites.find(
+          x =>
+            String(x.favoriteId) ===
+            String(id)
+        );
+
+
+      if (!f) return;
+
+
+      try {
+
+        await favApi(
+          'add_products',
+          {
+            productsJson:
+              JSON.stringify(
+                [f.product]
+              )
+          }
+        );
+
+
+        notify(
+          'Dodano produkt do listy.'
+        );
+
+
+        document
+          .querySelector(
+            '.tab[data-view="list"]'
+          )
+          ?.click();
+
+      } catch (e) {
+
+        notify(
+          e.message
+        );
+      }
+    }
+
+
+    function syncRecognizedStars() {
+
+      const container =
+        document.getElementById(
+          'recognizedItems'
+        );
+
+
+      if (!container) return;
+
+
+      [
+        ...container.querySelectorAll(
+          '.recognized-row'
+        )
+      ]
+        .forEach(
+          row => {
+
+            if (
+              row.querySelector(
+                '.favorite-star'
+              )
+            ) {
+              return;
+            }
+
+
+            const name =
+              row
+                .querySelector(
+                  '.product-name'
+                )
+                ?.textContent
+                ?.trim();
+
+
+            if (!name) return;
+
+
+            const btn =
+              document.createElement(
+                'button'
+              );
+
+
+            btn.type =
+              'button';
+
+            btn.className =
+              'favorite-star';
+
+            btn.title =
+              'Dodaj do ulubionych';
+
+            btn.textContent =
+              '☆';
+
+            btn.dataset.favoriteProduct =
+              name;
+
+
+            const del =
+              row.querySelector(
+                '.delete-btn'
+              );
+
+
+            row.insertBefore(
+              btn,
+              del || null
+            );
+
+          }
+        );
+    }
+
+
+    window.addEventListener(
+      'load',
+      () => {
+
+        const favTab =
+          document.querySelector(
+            '.tab[data-view="favorites"]'
+          );
+
+
+        favTab?.addEventListener(
+          'click',
+          loadFavorites
+        );
+
+
+        document
+          .querySelectorAll(
+            '[data-go="favorites"]'
+          )
+          .forEach(
+            b =>
+              b.addEventListener(
+                'click',
+                () =>
+                  setTimeout(
+                    loadFavorites,
+                    0
+                  )
+              )
+          );
+
+
+        document
+          .getElementById(
+            'favoriteManualAdd'
+          )
+          ?.addEventListener(
+            'click',
+            async () => {
+
+              const i =
+                document.getElementById(
+                  'favoriteManualInput'
+                );
+
+
+              const v =
+                i?.value.trim();
+
+
+              if (!v) {
+
+                notify(
+                  'Wpisz nazwę produktu.'
+                );
+
+                return;
+              }
+
+
+              await addFavorite(v);
+
+
+              if (i) {
+                i.value = '';
+              }
+
+            }
+          );
+
+
+        document
+          .getElementById(
+            'favoriteManualInput'
+          )
+          ?.addEventListener(
+            'keydown',
+            e => {
+
+              if (
+                e.key === 'Enter'
+              ) {
+
+                e.preventDefault();
+
+
+                document
+                  .getElementById(
+                    'favoriteManualAdd'
+                  )
+                  ?.click();
+              }
+
+            }
+          );
+
+
+        document
+          .getElementById(
+            'favoritesList'
+          )
+          ?.addEventListener(
+            'click',
+            e => {
+
+              const add =
+                e.target.closest(
+                  '[data-fav-add-list]'
+                );
+
+
+              if (add) {
+
+                addFavoriteToList(
+                  add.dataset.favAddList
+                );
+
+                return;
+              }
+
+
+              const del =
+                e.target.closest(
+                  '[data-fav-delete]'
+                );
+
+
+              if (del) {
+
+                deleteFavorite(
+                  del.dataset.favDelete
+                );
+              }
+
+            }
+          );
+
+
+        document
+          .getElementById(
+            'recognizedItems'
+          )
+          ?.addEventListener(
+            'click',
+            e => {
+
+              const b =
+                e.target.closest(
+                  '[data-favorite-product]'
+                );
+
+
+              if (b) {
+
+                e.stopPropagation();
+
+
+                addFavorite(
+                  b.dataset.favoriteProduct
+                );
+              }
+
+            }
+          );
+
+
+        const recognized =
+          document.getElementById(
+            'recognizedItems'
+          );
+
+
+        if (recognized) {
+
+          new MutationObserver(
+            syncRecognizedStars
+          )
+            .observe(
+              recognized,
+              {
+                childList: true,
+                subtree: true
+              }
+            );
+        }
+
+
+        syncRecognizedStars();
+
+      }
+    );
+
   })();
   </script>
+
 </body>
 </html>
