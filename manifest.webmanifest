@@ -1,14 +1,14 @@
 {
   "name": "Lista zakupów",
   "short_name": "Zakupy",
-  "description": "Prywatna lista zakupów z dodawaniem tekstem i zdjęciem oraz archiwum zakupów.",
+  "description": "Prywatna lista zakupów z dodawaniem tekstem, zdjęciem, ulubionymi i archiwum.",
   "id": "/lista-zakupow-pwa/",
   "start_url": "/lista-zakupow-pwa/",
   "scope": "/lista-zakupow-pwa/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#090d10",
-  "theme_color": "#090d10",
+  "background_color": "#100c12",
+  "theme_color": "#100c12",
   "icons": [
     {
       "src": "./icon.svg",
