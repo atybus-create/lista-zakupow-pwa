@@ -1,53 +1,6 @@
-<!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,viewport-fit=cover"
-  >
-
-  <meta
-    name="theme-color"
-    content="#100c12"
-  >
-
-  <meta
-    name="color-scheme"
-    content="dark"
-  >
-
-  <meta
-    name="mobile-web-app-capable"
-    content="yes"
-  >
-
-  <meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
-  >
-
-  <meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent"
-  >
-
-  <meta
-    name="apple-mobile-web-app-title"
-    content="Lista zakupów"
-  >
-
-  <meta
-    name="robots"
-    content="noindex,nofollow,noarchive"
-  >
-
-  <title>Lista zakupów</title>
-
-  <link
+<link
     rel="manifest"
-    href="./manifest.webmanifest?v=20260814-3"
+    href="./manifest.webmanifest?v=20260814-4"
   >
 
   <link
@@ -63,22 +16,17 @@
 
   <link
     rel="stylesheet"
-    href="./styles.css?v=20260814-3"
+    href="./styles.css?v=20260814-4"
   >
 </head>
 
 <body>
 
-  <!-- OFFLINE -->
-  <div
-    id="offline"
-    class="offline"
-  >
+  <div id="offline" class="offline">
     Brak połączenia z siecią
   </div>
 
 
-  <!-- PROCESSING -->
   <div
     id="processing"
     class="processing hidden"
@@ -114,14 +62,12 @@
   </div>
 
 
-  <!-- APP -->
   <main
     id="appShell"
     class="app-shell"
     data-active-view="list"
   >
 
-    <!-- HEADER -->
     <header class="app-header">
 
       <div class="brand-copy">
@@ -161,10 +107,7 @@
           title="Zainstaluj aplikację"
           aria-label="Zainstaluj aplikację"
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-          >
+          <svg viewBox="0 0 24 24" fill="none">
             <path
               d="M12 3v11
                  m0 0 4-4
@@ -212,10 +155,7 @@
       <div class="hero-card compact">
 
         <div class="summary-icon">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-          >
+          <svg viewBox="0 0 24 24" fill="none">
             <path
               d="M7 7h13
                  M7 12h13
@@ -318,7 +258,6 @@
       </div>
 
 
-      <!-- PHOTO -->
       <label
         class="choice-card camera-button"
         for="photoInput"
@@ -326,10 +265,7 @@
 
         <span class="choice-icon">
 
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-          >
+          <svg viewBox="0 0 24 24" fill="none">
             <path
               d="M4 8h3
                  l1.5-2h7
@@ -376,17 +312,13 @@
       >
 
 
-      <!-- TEXT -->
       <div class="card manual-card">
 
         <div class="manual-heading">
 
           <span class="choice-icon small">
 
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-            >
+            <svg viewBox="0 0 24 24" fill="none">
               <path
                 d="m5 19 3.5-.8
                    L18 8.7
@@ -395,9 +327,7 @@
                    5 19Z"
               />
 
-              <path
-                d="m14 7 3 3"
-              />
+              <path d="m14 7 3 3"/>
             </svg>
 
           </span>
@@ -458,7 +388,6 @@
       </div>
 
 
-      <!-- FAVORITES -->
       <button
         class="choice-card favorite-entry"
         data-go="favorites"
@@ -467,10 +396,7 @@
 
         <span class="choice-icon">
 
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-          >
+          <svg viewBox="0 0 24 24" fill="none">
             <path
               d="m12 3
                  2.7 5.5
@@ -509,7 +435,6 @@
       </button>
 
 
-      <!-- RECOGNITION -->
       <div
         id="recognitionPanel"
         class="card recognition-card hidden"
@@ -576,7 +501,7 @@
     </section>
 
 
-    <!-- FAVORITES -->
+    <!-- ULUBIONE -->
     <section
       id="view-favorites"
       class="view"
@@ -644,7 +569,7 @@
     </section>
 
 
-    <!-- SHOP -->
+    <!-- ZAKUPY -->
     <section
       id="view-shop"
       class="view"
@@ -696,7 +621,7 @@
     </section>
 
 
-    <!-- ARCHIVE -->
+    <!-- ARCHIWUM -->
     <section
       id="view-archive"
       class="view"
@@ -738,7 +663,6 @@
     </section>
 
 
-    <!-- TOAST -->
     <div
       id="toast"
       class="toast hidden"
@@ -746,7 +670,7 @@
     ></div>
 
 
-    <!-- BOTTOM NAV -->
+    <!-- NAV -->
     <nav
       class="tabs"
       aria-label="Nawigacja"
@@ -758,10 +682,7 @@
         type="button"
       >
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-        >
+        <svg viewBox="0 0 24 24" fill="none">
           <path
             d="M7 6h13
                M7 12h13
@@ -785,10 +706,7 @@
         type="button"
       >
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-        >
+        <svg viewBox="0 0 24 24" fill="none">
           <circle
             cx="12"
             cy="12"
@@ -813,10 +731,7 @@
         type="button"
       >
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-        >
+        <svg viewBox="0 0 24 24" fill="none">
           <path
             d="m12 3
                2.7 5.5
@@ -845,10 +760,7 @@
         type="button"
       >
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-        >
+        <svg viewBox="0 0 24 24" fill="none">
           <path
             d="M4 5h2
                l2 10
@@ -883,10 +795,7 @@
         type="button"
       >
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-        >
+        <svg viewBox="0 0 24 24" fill="none">
           <path
             d="M4 7h16v13H4V7Z
                M6 4h12l2 3H4l2-3Z
@@ -905,11 +814,9 @@
   </main>
 
 
-  <!-- CACHE REFRESH -->
   <script>
     if ('caches' in window) {
-      caches
-        .keys()
+      caches.keys()
         .then(
           keys =>
             Promise.all(
@@ -944,19 +851,19 @@
   </script>
 
 
-  <!-- GŁÓWNA LOGIKA - BEZ ZMIAN -->
   <script
-    src="./app.js?v=20260814-3"
+    src="./app.js?v=20260814-4"
     defer
   ></script>
 
 
-  <!-- ULUBIONE - ISTNIEJĄCA LOGIKA -->
+  <!-- ULUBIONE -->
   <script>
   (() => {
 
     const FAVORITES_API =
       'https://n8n-pi.taild8d05f.ts.net/webhook/lista-zakupow-v2';
+
 
     const escFav = s =>
       String(s ?? '')
@@ -971,6 +878,7 @@
           }[c])
         );
 
+
     let favorites = [];
 
 
@@ -982,10 +890,12 @@
       const fd =
         new FormData();
 
+
       fd.append(
         'action',
         action
       );
+
 
       Object
         .entries(fields)
@@ -1036,11 +946,13 @@
           'toast'
         );
 
+
       if (!el) return;
 
 
       el.textContent =
         msg;
+
 
       el.classList.remove(
         'hidden'
@@ -1074,6 +986,7 @@
             d="M6 8h12
                l1 12H5L6 8Z"
           />
+
           <path
             d="M9 8V6
                a3 3 0 0 1 6 0
@@ -1109,6 +1022,7 @@
         document.getElementById(
           'favoritesList'
         );
+
 
       if (!box) return;
 
@@ -1235,9 +1149,7 @@
           .trim();
 
 
-      if (!product) {
-        return;
-      }
+      if (!product) return;
 
 
       try {
@@ -1393,14 +1305,18 @@
             btn.type =
               'button';
 
+
             btn.className =
               'favorite-star';
+
 
             btn.title =
               'Dodaj do ulubionych';
 
+
             btn.textContent =
               '☆';
+
 
             btn.dataset.favoriteProduct =
               name;
