@@ -1,5 +1,5 @@
 const CACHE =
-  'lista-zakupow-v2-rose-20260814-5';
+  'lista-zakupow-v2-rose-20260814-6';
 
 
 const ASSETS = [
