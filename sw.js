@@ -1,37 +1,178 @@
-const CACHE='lista-zakupow-v2-v2';
-const ASSETS=['./','./index.html','./styles.css?v=20260814-2','./app.js?v=20260814-2','./manifest.webmanifest?v=20260814-2','./icon.svg'];
+const CACHE =
+  'lista-zakupow-v2-rose-20260814-3';
 
-self.addEventListener('install',event=>{
-  event.waitUntil(
-    caches.open(CACHE)
-      .then(cache=>cache.addAll(ASSETS))
-      .then(()=>self.skipWaiting())
-  );
-});
 
-self.addEventListener('activate',event=>{
-  event.waitUntil(
-    caches.keys()
-      .then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))
-      .then(()=>self.clients.claim())
-  );
-});
+const ASSETS = [
+  './',
+  './index.html',
+  './styles.css?v=20260814-3',
+  './app.js?v=20260814-3',
+  './manifest.webmanifest?v=20260814-3',
+  './icon.svg'
+];
 
-self.addEventListener('fetch',event=>{
-  const req=event.request;
-  if(req.method!=='GET')return;
-  const url=new URL(req.url);
-  if(url.origin!==self.location.origin)return;
 
-  event.respondWith(
-    fetch(req,{cache:'no-store'})
-      .then(res=>{
-        if(res&&res.ok){
-          const copy=res.clone();
-          caches.open(CACHE).then(cache=>cache.put(req,copy)).catch(()=>{});
+self.addEventListener(
+  'install',
+  event => {
+
+    event.waitUntil(
+
+      caches
+        .open(CACHE)
+
+        .then(
+          cache =>
+            cache.addAll(
+              ASSETS
+            )
+        )
+
+        .then(
+          () =>
+            self.skipWaiting()
+        )
+
+    );
+
+  }
+);
+
+
+self.addEventListener(
+  'activate',
+  event => {
+
+    event.waitUntil(
+
+      caches
+        .keys()
+
+        .then(
+          keys =>
+            Promise.all(
+
+              keys
+                .filter(
+                  key =>
+                    key !== CACHE
+                )
+
+                .map(
+                  key =>
+                    caches.delete(
+                      key
+                    )
+                )
+
+            )
+        )
+
+        .then(
+          () =>
+            self.clients.claim()
+        )
+
+    );
+
+  }
+);
+
+
+self.addEventListener(
+  'fetch',
+  event => {
+
+    const req =
+      event.request;
+
+
+    if (
+      req.method !== 'GET'
+    ) {
+      return;
+    }
+
+
+    const url =
+      new URL(
+        req.url
+      );
+
+
+    /*
+      Nie cache'ujemy zewnętrznych requestów,
+      np. API n8n.
+    */
+
+    if (
+      url.origin !==
+      self.location.origin
+    ) {
+      return;
+    }
+
+
+    event.respondWith(
+
+      fetch(
+        req,
+        {
+          cache:
+            'no-store'
         }
-        return res;
-      })
-      .catch(()=>caches.match(req).then(cached=>cached||caches.match('./index.html')))
-  );
-});
+      )
+
+        .then(
+          res => {
+
+            if (
+              res &&
+              res.ok
+            ) {
+
+              const copy =
+                res.clone();
+
+
+              caches
+                .open(CACHE)
+
+                .then(
+                  cache =>
+                    cache.put(
+                      req,
+                      copy
+                    )
+                )
+
+                .catch(
+                  () => {}
+                );
+
+            }
+
+
+            return res;
+
+          }
+        )
+
+        .catch(
+          () =>
+            caches
+              .match(req)
+
+              .then(
+                cached =>
+                  cached ||
+                  caches.match(
+                    './index.html'
+                  )
+              )
+        )
+
+    );
+
+  }
+);
