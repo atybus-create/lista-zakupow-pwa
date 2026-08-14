@@ -1,0 +1,132 @@
+name: One-off mobile scale fix
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.head_commit.message == 'Add temporary mobile scale fix workflow'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch frontend files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          version_old = '20260814-4'
+          version_new = '20260814-5'
+
+          index_path = Path('index.html')
+          index = index_path.read_text(encoding='utf-8')
+
+          head = '''<!doctype html>
+          <html lang="pl">
+          <head>
+            <meta charset="utf-8">
+
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, viewport-fit=cover"
+            >
+
+            <meta
+              name="theme-color"
+              content="#100c12"
+            >
+
+            <meta
+              name="color-scheme"
+              content="dark"
+            >
+
+            <meta
+              name="mobile-web-app-capable"
+              content="yes"
+            >
+
+            <meta
+              name="apple-mobile-web-app-capable"
+              content="yes"
+            >
+
+            <meta
+              name="apple-mobile-web-app-status-bar-style"
+              content="black-translucent"
+            >
+
+            <meta
+              name="apple-mobile-web-app-title"
+              content="Lista zakupów"
+            >
+
+            <meta
+              name="robots"
+              content="noindex,nofollow,noarchive"
+            >
+
+            <title>Lista zakupów</title>
+
+          '''
+          head = '\n'.join(line[10:] if line.startswith('          ') else line for line in head.splitlines()) + '\n'
+
+          if not index.lstrip().lower().startswith('<!doctype html>'):
+              index = head + index
+
+          index = index.replace(version_old, version_new)
+          index_path.write_text(index, encoding='utf-8')
+
+          styles_path = Path('styles.css')
+          css = styles_path.read_text(encoding='utf-8')
+
+          old_width = '  width: min(720px, 100%);'
+          if old_width not in css:
+              raise SystemExit('Expected mobile app-shell width rule was not found')
+          css = css.replace(old_width, '  width: 100%;', 1)
+
+          media_marker = '@media (min-width: 680px) {\n'
+          desktop_rule = '@media (min-width: 680px) {\n\n  .app-shell {\n    width: min(720px, calc(100% - 32px));\n  }\n'
+          if media_marker not in css:
+              raise SystemExit('Expected responsive breakpoint was not found')
+          css = css.replace(media_marker, desktop_rule, 1)
+
+          css = css.replace('  transform: scale(.99);\n', '', 1)
+          styles_path.write_text(css, encoding='utf-8')
+
+          sw_path = Path('sw.js')
+          sw = sw_path.read_text(encoding='utf-8')
+          if version_old not in sw:
+              raise SystemExit('Expected PWA cache version was not found')
+          sw = sw.replace(version_old, version_new)
+          sw_path.write_text(sw, encoding='utf-8')
+
+          assert 'content="width=device-width, initial-scale=1, viewport-fit=cover"' in index
+          assert version_new in index
+          assert version_new in sw
+          assert 'transform: scale(' not in css
+          assert 'width: min(720px, calc(100% - 32px));' in css
+          PY
+
+      - name: Validate and commit
+        shell: bash
+        run: |
+          git diff --check
+          grep -F 'content="width=device-width, initial-scale=1, viewport-fit=cover"' index.html
+          grep -F 'width: 100%;' styles.css | head -n 1
+          grep -F 'width: min(720px, calc(100% - 32px));' styles.css
+          grep -F 'lista-zakupow-v2-rose-20260814-5' sw.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/mobile-scale-fix.yml
+          git add index.html styles.css sw.js
+          git commit -m 'Fix mobile viewport scale and preserve document scrolling'
+          git push
