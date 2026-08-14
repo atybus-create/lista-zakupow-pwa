@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Lista zakupów">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Lista zakupów</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="offline" class="offline">Brak połączenia z siecią.</div>
+  <div id="processing" class="processing hidden" role="status" aria-live="polite">
+    <div class="processing-box"><div class="spinner"></div><h2 id="processingTitle">Przetwarzam</h2><p id="processingMsg">Proszę czekać…</p><p id="processingTime" class="muted">0 s</p></div>
+  </div>
+  <main class="app-shell">
+    <header class="app-header">
+      <div><div class="eyebrow">PRYWATNE // PWA</div><h1>🛒 Lista zakupów</h1><p class="muted">Wersja 2</p></div>
+      <button id="installBtn" class="install-btn hidden" type="button">Zainstaluj</button>
+    </header>
+
+    <nav class="tabs" aria-label="Nawigacja">
+      <button class="tab active" data-view="list">Lista</button>
+      <button class="tab" data-view="add">Dodaj</button>
+      <button class="tab" data-view="shop">Zakupy</button>
+      <button class="tab" data-view="archive">Archiwum</button>
+    </nav>
+
+    <section id="view-list" class="view active">
+      <div class="section-head"><div><h2>Aktualna lista</h2><p id="listCount" class="muted"></p></div><button class="ghost" data-go="add">+ Dodaj</button></div>
+      <div id="listItems" class="card list"></div>
+    </section>
+
+    <section id="view-add" class="view">
+      <h2>Dodaj produkty</h2>
+      <div class="card">
+        <label for="textInput">Wpisz produkty</label>
+        <textarea id="textInput" rows="4" maxlength="500" placeholder="Np. mleko, chleb, 2 banany"></textarea>
+        <button id="recognizeTextBtn" class="primary" type="button">Rozpoznaj z tekstu</button>
+        <div class="divider"><span>lub</span></div>
+        <label class="camera-button" for="photoInput"><span>📷</span><div><strong>Zrób zdjęcie</strong><small>Rozpoznaj produkty widoczne na zdjęciu</small></div></label>
+        <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+      </div>
+      <div id="recognitionPanel" class="card hidden">
+        <div class="section-head"><div><h3>Rozpoznane produkty</h3><p class="muted">Usuń błędne pozycje przed zapisaniem.</p></div></div>
+        <div id="recognizedItems" class="list"></div>
+        <div class="button-row"><button id="cancelRecognitionBtn" class="secondary" type="button">Anuluj</button><button id="saveRecognitionBtn" class="primary" type="button">Dodaj do listy</button></div>
+      </div>
+    </section>
+
+    <section id="view-shop" class="view">
+      <div class="section-head"><div><h2>Zrób zakupy</h2><p class="muted">Kliknij produkt po włożeniu go do koszyka.</p></div></div>
+      <div id="shopItems" class="card list"></div>
+      <button id="finishBtn" class="primary danger-space" type="button" disabled>Zakupy zrobione</button>
+    </section>
+
+    <section id="view-archive" class="view">
+      <h2>Archiwum zakupów</h2>
+      <div id="archiveItems" class="card list"></div>
+      <div id="archiveDetail" class="card hidden"></div>
+    </section>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
