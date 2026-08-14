@@ -7,8 +7,8 @@
   "scope": "/lista-zakupow-pwa/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f3f4f6",
-  "theme_color": "#111827",
+  "background_color": "#090d10",
+  "theme_color": "#090d10",
   "icons": [
     {
       "src": "./icon.svg",
