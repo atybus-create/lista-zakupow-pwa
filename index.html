@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#111827">
+  <meta name="theme-color" content="#090d10">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,13 +17,28 @@
 </head>
 <body>
   <div id="offline" class="offline">Brak połączenia z siecią.</div>
+
   <div id="processing" class="processing hidden" role="status" aria-live="polite">
-    <div class="processing-box"><div class="spinner"></div><h2 id="processingTitle">Przetwarzam</h2><p id="processingMsg">Proszę czekać…</p><p id="processingTime" class="muted">0 s</p></div>
+    <div class="processing-box">
+      <div class="spinner"></div>
+      <h2 id="processingTitle">Przetwarzam</h2>
+      <p id="processingMsg">Proszę czekać…</p>
+      <p id="processingTime" class="muted">0 s</p>
+    </div>
   </div>
-  <main class="app-shell">
+
+  <main id="appShell" class="app-shell" data-active-view="list">
     <header class="app-header">
-      <div><div class="eyebrow">PRYWATNE // PWA</div><h1>🛒 Lista zakupów</h1><p class="muted">Wersja 2</p></div>
-      <button id="installBtn" class="install-btn hidden" type="button">Zainstaluj</button>
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7.5 8V6.5a4.5 4.5 0 0 1 9 0V8M5.5 8h13l1 12h-15l1-12Z"/></svg>
+      </div>
+      <div class="brand-copy">
+        <h1>Lista zakupów</h1>
+        <p class="muted">Wersja 2</p>
+      </div>
+      <button id="installBtn" class="icon-button install-btn hidden" type="button" title="Zainstaluj aplikację" aria-label="Zainstaluj aplikację">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg>
+      </button>
     </header>
 
     <nav class="tabs" aria-label="Nawigacja">
@@ -34,41 +49,95 @@
     </nav>
 
     <section id="view-list" class="view active">
-      <div class="section-head"><div><h2>Aktualna lista</h2><p id="listCount" class="muted"></p></div><button class="ghost" data-go="add">+ Dodaj</button></div>
-      <div id="listItems" class="card list"></div>
+      <div class="hero-card compact">
+        <div class="summary-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
+        </div>
+        <div class="summary-copy">
+          <strong id="listSummaryTitle">Aktualna lista</strong>
+          <span id="listCount" class="muted"></span>
+        </div>
+        <button class="soft-action" data-go="add" type="button">+ Dodaj</button>
+      </div>
+      <div id="listItems" class="list-panel"></div>
     </section>
 
     <section id="view-add" class="view">
-      <h2>Dodaj produkty</h2>
-      <div class="card">
+      <div class="section-title">
+        <div class="section-title-icon">✦</div>
+        <div><h2>Dodaj produkty</h2><p class="muted">Wpisz produkty albo zrób zdjęcie.</p></div>
+      </div>
+
+      <div class="card add-card">
         <label for="textInput">Wpisz produkty</label>
-        <textarea id="textInput" rows="4" maxlength="500" placeholder="Np. mleko, chleb, 2 banany"></textarea>
-        <button id="recognizeTextBtn" class="primary" type="button">Rozpoznaj z tekstu</button>
+        <div class="textarea-wrap">
+          <textarea id="textInput" rows="4" maxlength="500" placeholder="np. mleko, chleb, 2 banany"></textarea>
+          <span id="charCount" class="char-count">0/500</span>
+        </div>
+        <button id="recognizeTextBtn" class="primary glow" type="button">
+          <span>✦</span> Rozpoznaj z tekstu
+        </button>
+
         <div class="divider"><span>lub</span></div>
-        <label class="camera-button" for="photoInput"><span>📷</span><div><strong>Zrób zdjęcie</strong><small>Rozpoznaj produkty widoczne na zdjęciu</small></div></label>
+
+        <label class="camera-button" for="photoInput">
+          <span class="camera-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h3l1.5-2h7L17 7h3v12H4V7Z"/><circle cx="12" cy="13" r="4"/></svg>
+          </span>
+          <div><strong>Zrób zdjęcie</strong><small>Rozpoznaj produkty widoczne na zdjęciu</small></div>
+          <span class="chevron">›</span>
+        </label>
         <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
       </div>
-      <div id="recognitionPanel" class="card hidden">
-        <div class="section-head"><div><h3>Rozpoznane produkty</h3><p class="muted">Usuń błędne pozycje przed zapisaniem.</p></div></div>
-        <div id="recognizedItems" class="list"></div>
-        <div class="button-row"><button id="cancelRecognitionBtn" class="secondary" type="button">Anuluj</button><button id="saveRecognitionBtn" class="primary" type="button">Dodaj do listy</button></div>
+
+      <div id="recognitionPanel" class="card recognition-card hidden">
+        <div class="section-head">
+          <div>
+            <h3>Rozpoznane produkty</h3>
+            <p class="muted">Usuń błędne pozycje przed zapisaniem.</p>
+          </div>
+          <span id="recognizedCount" class="count-badge">0</span>
+        </div>
+        <div id="recognizedItems" class="recognized-grid"></div>
+        <div class="button-row sticky-actions">
+          <button id="cancelRecognitionBtn" class="secondary" type="button">Anuluj</button>
+          <button id="saveRecognitionBtn" class="primary glow" type="button">✓ Dodaj do listy</button>
+        </div>
       </div>
     </section>
 
     <section id="view-shop" class="view">
-      <div class="section-head"><div><h2>Zrób zakupy</h2><p class="muted">Kliknij produkt po włożeniu go do koszyka.</p></div></div>
-      <div id="shopItems" class="card list"></div>
-      <button id="finishBtn" class="primary danger-space" type="button" disabled>Zakupy zrobione</button>
+      <div id="shopSummary" class="hero-card shop-progress-card"></div>
+      <div id="shopItems" class="shop-list"></div>
+      <button id="finishBtn" class="primary glow danger-space" type="button" disabled>✓ Zakupy zrobione</button>
     </section>
 
     <section id="view-archive" class="view">
-      <h2>Archiwum zakupów</h2>
-      <div id="archiveItems" class="card list"></div>
-      <div id="archiveDetail" class="card hidden"></div>
+      <div class="section-title archive-title">
+        <div class="section-title-icon archive-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v13H4V7Zm2-3h12l2 3H4l2-3Zm3 7h6"/></svg>
+        </div>
+        <div><h2>Archiwum zakupów</h2><p class="muted">Twoje wcześniejsze listy i zakupy.</p></div>
+      </div>
+      <div id="archiveItems" class="archive-list"></div>
+      <div id="archiveDetail" class="card archive-detail hidden"></div>
     </section>
 
     <div id="toast" class="toast hidden" role="status"></div>
+
+    <div class="bottom-dock" aria-hidden="false">
+      <div class="dock-side">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
+        <span id="dockCount">0 produktów</span>
+      </div>
+      <button class="fab" data-go="add" type="button" aria-label="Dodaj produkty">+</button>
+      <div class="dock-side dock-right">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span id="dockStatus">Online</span>
+      </div>
+    </div>
   </main>
+
   <script src="./app.js" defer></script>
 </body>
 </html>
