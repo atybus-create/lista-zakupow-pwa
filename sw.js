@@ -1,13 +1,13 @@
 const CACHE =
-  'lista-zakupow-v2-rose-20260814-3';
+  'lista-zakupow-v2-rose-20260814-4';
 
 
 const ASSETS = [
   './',
   './index.html',
-  './styles.css?v=20260814-3',
-  './app.js?v=20260814-3',
-  './manifest.webmanifest?v=20260814-3',
+  './styles.css?v=20260814-4',
+  './app.js?v=20260814-4',
+  './manifest.webmanifest?v=20260814-4',
   './icon.svg'
 ];
 
@@ -99,11 +99,6 @@ self.addEventListener(
         req.url
       );
 
-
-    /*
-      Nie cache'ujemy zewnętrznych requestów,
-      np. API n8n.
-    */
 
     if (
       url.origin !==
