@@ -273,7 +273,7 @@ svg {
 
   position: relative;
 
-  width: min(720px, 100%);
+  width: 100%;
 
   min-height: 100vh;
   min-height: 100dvh;
@@ -1405,7 +1405,6 @@ input:focus {
 .secondary:active,
 .choice-card:active,
 .large-add-card:active {
-  transform: scale(.99);
 }
 
 
@@ -2577,6 +2576,10 @@ textarea {
 ===================================================== */
 
 @media (min-width: 680px) {
+
+  .app-shell {
+    width: min(720px, calc(100% - 32px));
+  }
 
   .recognized-grid {
     grid-template-columns:

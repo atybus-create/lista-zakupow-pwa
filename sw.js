@@ -1,13 +1,13 @@
 const CACHE =
-  'lista-zakupow-v2-rose-20260814-4';
+  'lista-zakupow-v2-rose-20260814-5';
 
 
 const ASSETS = [
   './',
   './index.html',
-  './styles.css?v=20260814-4',
-  './app.js?v=20260814-4',
-  './manifest.webmanifest?v=20260814-4',
+  './styles.css?v=20260814-5',
+  './app.js?v=20260814-5',
+  './manifest.webmanifest?v=20260814-5',
   './icon.svg'
 ];
 
